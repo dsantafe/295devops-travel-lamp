@@ -2,36 +2,39 @@ version: '3'
 services:  
   mariadb:
     image: mariadb:latest
+    container_name: mariadb
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: Qwer1234!
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - 295devops-travel-lamp-mariadb-data:/var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/1.sql
       - ./database/devopstravel.sql:/docker-entrypoint-initdb.d/2.sql
     networks:
-      - lamp-net
+      - 295devops-travel-lamp-net
   php:
     build: .
+    container_name: php
     ports:
-      - "8080:80"
+      - "8010:80"
     depends_on:
       - mariadb
     networks:
-      - lamp-net
+      - 295devops-travel-lamp-net
   phpmyadmin:
     image: phpmyadmin:latest
+    container_name: phpmyadmin
     restart: always
     ports:
-      - "8081:80"
+      - "8011:80"
     depends_on:
       - mariadb
     environment:
       PMA_HOST: mariadb
     networks:
-      - lamp-net
+      - 295devops-travel-lamp-net
 volumes:
-  mariadb_data: {}
+  295devops-travel-lamp-mariadb-data: {}
 networks:
-  lamp-net:
+  295devops-travel-lamp-net:
     external: false
