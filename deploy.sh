@@ -39,7 +39,7 @@ build_application() {
     echo "====================================="
     echo -e "\n${LYELLOW}Compilando el código de la aplicación ...${NC}"
     cd ~/$repo
-    docker compose -p 295devops-travel-lamp --env-file .env.dev up -d --build
+    docker-compose -p 295devops-travel-lamp --env-file .env.dev up -d --build
     docker ps
     echo "====================================="
 }
